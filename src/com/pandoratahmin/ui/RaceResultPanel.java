@@ -2,12 +2,13 @@ package com.pandoratahmin.ui;
 
 import com.pandoratahmin.database.PredictionDAO;
 import com.pandoratahmin.database.RaceDAO;
+import com.pandoratahmin.database.SettingsDAO;
 import com.pandoratahmin.database.UserDAO;
-import com.pandoratahmin.main.Main;
 import com.pandoratahmin.model.Prediction;
 import com.pandoratahmin.model.Race;
 import com.pandoratahmin.model.User;
 import com.pandoratahmin.service.ScoreCalculationService;
+import com.pandoratahmin.main.Main;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,214 +17,254 @@ import java.util.List;
 public class RaceResultPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
-    
-    private RaceDAO raceDAO;
-    private UserDAO userDAO;
-    private PredictionDAO predictionDAO;
-    private ScoreCalculationService scoreService;
-    
-    private int ROW_HEIGHT = 40;
+
+    private RaceDAO raceDAO = new RaceDAO();
+    private UserDAO userDAO = new UserDAO();
+    private PredictionDAO predictionDAO = new PredictionDAO();
+    private SettingsDAO settingsDAO = new SettingsDAO();
+    private ScoreCalculationService scoreService = new ScoreCalculationService();
+
     private int WIDTH = 925;
-    
-    private JPanel tableContainer;
-    private JComboBox<Race> cmbxRace;
-    private JButton btnReturnMainMenu;
+    private int rowHeight = 50;
+    private int HEIGHT;
+    private int userCount;
+
+    private JLabel[] nameLblArr;
+    private JLabel[] qPointsLblArr;
+    private JLabel[] rPointsLblArr;
+    private JLabel[] raceRGLblArr;
+    private JLabel[] podiumLblArr;
+    private JLabel[] sQPointsLblArr;
+    private JLabel[] sRPointsLblArr;
+    private JLabel[] sprintRGLblArr;
+    private JLabel[] totalPointsLblArr;
+
+    JPanel panelTable = new JPanel();
+    JButton btnReturnMainMenu = new JButton("Ana Menüye Dön");
+    JComboBox<Race> cmbxRace = new JComboBox<>();
+    List<User> userList;
 
     public RaceResultPanel() {
-        this.raceDAO = new RaceDAO();
-        this.userDAO = new UserDAO();
-        this.predictionDAO = new PredictionDAO();
-        this.scoreService = new ScoreCalculationService();
-        
-        this.setPreferredSize(new Dimension(WIDTH, 550));
+        userList = userDAO.getAllUsers();
+        userCount = userList.size();
+        HEIGHT = rowHeight * (userCount + 2);
+
+        this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        this.setBackground(Color.BLACK);
         this.setLayout(null);
-        
-        // --- ÜST BÖLÜM (Filtreleme) ---
-        JPanel topPanel = new JPanel();
-        topPanel.setBounds(0, 0, WIDTH, 60);
-        topPanel.setLayout(null);
-        add(topPanel);
-        
-        JLabel lblSelectRace = new JLabel("Yarış Seçin:");
-        lblSelectRace.setFont(new Font("Verdana", Font.BOLD, 15));
-        lblSelectRace.setBounds(20, 15, 120, 30);
-        topPanel.add(lblSelectRace);
-        
-        cmbxRace = new JComboBox<>();
-        cmbxRace.setFont(new Font("Verdana", Font.PLAIN, 15));
-        cmbxRace.setBounds(130, 15, 250, 30);
-        topPanel.add(cmbxRace);
-        
-        btnReturnMainMenu = new JButton("Ana Menüye Dön");
-        btnReturnMainMenu.setFont(new Font("Century Gothic", Font.BOLD, 14));
-        btnReturnMainMenu.setBounds(730, 10, 170, 40);
-        topPanel.add(btnReturnMainMenu);
-        
-        // --- BAŞLIKLAR (Header) ---
-        JPanel headerPanel = new JPanel();
-        headerPanel.setBounds(0, 60, WIDTH, ROW_HEIGHT);
-        headerPanel.setLayout(null);
-        headerPanel.setBackground(Color.DARK_GRAY);
-        add(headerPanel);
-        
-        String[] headers = {"İsim", "S", "Y", "Y.DT", "P", "SS", "SY", "S.DT", "Toplam"};
-        int[] xPositions = {10, 200, 280, 360, 440, 520, 600, 680, 760};
-        int[] widths =     {180, 70,  70,  70,  70,  70,  70,  70,  100};
-        
+
+        nameLblArr = new JLabel[userCount];
+        qPointsLblArr = new JLabel[userCount];
+        rPointsLblArr = new JLabel[userCount];
+        raceRGLblArr = new JLabel[userCount];
+        podiumLblArr = new JLabel[userCount];
+        sQPointsLblArr = new JLabel[userCount];
+        sRPointsLblArr = new JLabel[userCount];
+        sprintRGLblArr = new JLabel[userCount];
+        totalPointsLblArr = new JLabel[userCount];
+
+        // --- PANELLER ---
+        JPanel panelTop = new JPanel();
+        panelTop.setBounds(0, 0, WIDTH, rowHeight);
+        panelTop.setLayout(null);
+        add(panelTop);
+
+        panelTable.setBounds(0, rowHeight, WIDTH, HEIGHT - rowHeight);
+        panelTable.setBackground(Color.BLACK);
+        panelTable.setLayout(null);
+        add(panelTable);
+
+        // --- ÜST MENÜ ---
+        JLabel lblRace = new JLabel("Yarış : ");
+        lblRace.setFont(FontManager.getFont(Font.BOLD, 16));
+        lblRace.setBounds(20, 10, 80, 30);
+        panelTop.add(lblRace);
+
+        cmbxRace.setBounds(100, 10, 200, 30);
+        cmbxRace.setFont(FontManager.getFont(Font.PLAIN, 15));
+        panelTop.add(cmbxRace);
+
+        btnReturnMainMenu.setFont(FontManager.getFont(Font.BOLD, 14));
+        btnReturnMainMenu.setBounds(WIDTH - 210, 10, 180, 30);
+        panelTop.add(btnReturnMainMenu);
+
+        // --- TABLO BAŞLIKLARI ---
+        String[] headers = { "İsim", "Q", "R", "Y.DT", "P", "SQ", "SR", "S.DT", "Toplam" };
+        int[] xPos = { 0, 301, 376, 451, 526, 601, 676, 751, 826 };
+        int[] widths = { 300, 74, 74, 74, 74, 74, 74, 74, 99 };
+
         for (int i = 0; i < headers.length; i++) {
             JLabel lbl = new JLabel(headers[i]);
             lbl.setForeground(Color.WHITE);
-            lbl.setFont(new Font("Verdana", Font.BOLD, 15));
+            lbl.setFont(FontManager.getFont(Font.BOLD, 16));
             lbl.setHorizontalAlignment(SwingConstants.CENTER);
-            lbl.setBounds(xPositions[i], 0, widths[i], ROW_HEIGHT);
-            headerPanel.add(lbl);
+            lbl.setBounds(xPos[i], 0, widths[i], rowHeight);
+            panelTable.add(lbl);
         }
-        
-        // --- TABLO İÇERİĞİ (Scrollable) ---
-        tableContainer = new JPanel();
-        tableContainer.setLayout(null);
-        
-        JScrollPane scrollPane = new JScrollPane(tableContainer);
-        scrollPane.setBounds(0, 60 + ROW_HEIGHT, WIDTH, 450 - ROW_HEIGHT);
-        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setBorder(null);
-        add(scrollPane);
-        
-        // Verileri Yükle
-        loadComboData();
-        
-        // --- EVENT LISTENER'LAR ---
-        cmbxRace.addActionListener(e -> refreshResults());
-        
-        btnReturnMainMenu.addActionListener(e -> {
-            Main.mainMenuFrame.raceResultsFrame.dispose();
-            Main.mainMenuFrame.setVisible(true);
-        });
-    }
-    
-    private void loadComboData() {
+
+        // --- HÜCRELERİN OLUŞTURULMASI ---
+        for (int i = 0; i < userCount; i++) {
+            int y = rowHeight * (i + 1);
+
+            nameLblArr[i] = new JLabel();
+            nameLblArr[i].setBounds(xPos[0], y + 1, widths[0], rowHeight - 1);
+            nameLblArr[i].setOpaque(true);
+            nameLblArr[i].setFont(FontManager.getFont(Font.BOLD, 15));
+            panelTable.add(nameLblArr[i]);
+
+            qPointsLblArr[i] = createDataLabel(xPos[1], y, widths[1]);
+            rPointsLblArr[i] = createDataLabel(xPos[2], y, widths[2]);
+            raceRGLblArr[i] = createDataLabel(xPos[3], y, widths[3]);
+            podiumLblArr[i] = createDataLabel(xPos[4], y, widths[4]);
+            sQPointsLblArr[i] = createDataLabel(xPos[5], y, widths[5]);
+            sRPointsLblArr[i] = createDataLabel(xPos[6], y, widths[6]);
+            sprintRGLblArr[i] = createDataLabel(xPos[7], y, widths[7]);
+
+            totalPointsLblArr[i] = createDataLabel(xPos[8], y, widths[8]);
+            totalPointsLblArr[i].setFont(FontManager.getFont(Font.BOLD, 16));
+        }
+
+        // --- VERİ DOLDURMA ---
         List<Race> races = raceDAO.getAllRaces();
         for (Race r : races) {
             cmbxRace.addItem(r);
         }
-        if (!races.isEmpty()) refreshResults();
-    }
-    
-    private void refreshResults() {
-        tableContainer.removeAll();
-        Race selectedRace = (Race) cmbxRace.getSelectedItem();
-        if (selectedRace == null || !selectedRace.isCompleted()) {
-            tableContainer.revalidate();
-            tableContainer.repaint();
-            return;
+
+        // --- EVENT LISTENER'LAR ---
+        btnReturnMainMenu.addActionListener(e -> {
+            MainMenuFrame.raceResultsFrame.dispose();
+            Main.mainMenuFrame.setVisible(true);
+        });
+
+        cmbxRace.addActionListener(e -> refreshData());
+
+        // Seçili yarış varsa, tabloyu ilk açılışta doldur
+        if (cmbxRace.getItemCount() > 0) {
+            refreshData();
         }
-        
-        List<User> users = userDAO.getAllUsers();
-        int userCount = users.size();
-        tableContainer.setPreferredSize(new Dimension(WIDTH, userCount * ROW_HEIGHT));
-        
-        // 1. ADIM: Maksimum Doğru Tahmin sayılarını bul (Mor renk ile vurgulamak için)
+    }
+
+    private JLabel createDataLabel(int x, int y, int width) {
+        JLabel lbl = new JLabel();
+        lbl.setBounds(x, y + 1, width, rowHeight - 1);
+        lbl.setOpaque(true);
+        lbl.setBackground(Color.WHITE);
+        lbl.setForeground(Color.BLACK);
+        lbl.setHorizontalAlignment(SwingConstants.CENTER);
+        lbl.setFont(FontManager.getFont(Font.PLAIN, 15));
+        panelTable.add(lbl);
+        return lbl;
+    }
+
+    private void refreshData() {
+        Race selectedRace = (Race) cmbxRace.getSelectedItem();
+        if (selectedRace == null)
+            return;
+
         int maxRaceRG = 0;
         int maxSprintRG = 0;
-        Prediction[] tempPreds = new Prediction[userCount];
-        
+        Prediction[] preds = new Prediction[userCount];
+
         for (int i = 0; i < userCount; i++) {
-            Prediction pred = predictionDAO.getPrediction(users.get(i).getId(), selectedRace.getId());
-            if (pred != null && !pred.isDidNotAttend()) {
-                // Sırrı burada: Veritabanından gelen tahmini anlık olarak hesaplatıyoruz!
-                scoreService.calculatePoints(pred, selectedRace);
-                
-                if (pred.getRaceRightGuess() > maxRaceRG) maxRaceRG = pred.getRaceRightGuess();
-                if (pred.getSprintRightGuess() > maxSprintRG) maxSprintRG = pred.getSprintRightGuess();
+            Prediction p = predictionDAO.getPrediction(userList.get(i).getId(), selectedRace.getId());
+            if (p != null && !p.isDidNotAttend()) {
+                scoreService.calculatePoints(p, selectedRace);
+                if (p.getRaceRightGuess() > maxRaceRG)
+                    maxRaceRG = p.getRaceRightGuess();
+                if (p.getSprintRightGuess() > maxSprintRG)
+                    maxSprintRG = p.getSprintRightGuess();
             }
-            tempPreds[i] = pred;
+            preds[i] = p;
         }
-        
-        // 2. ADIM: Arayüzü Çiz
-        int[] xPositions = {10, 200, 280, 360, 440, 520, 600, 680, 760};
-        int[] widths =     {180, 70,  70,  70,  70,  70,  70,  70,  100};
-        Color highlightColor = new Color(117, 49, 156); // Pandora Moru (En çok bilenler için)
-        
+
         for (int i = 0; i < userCount; i++) {
-            User u = users.get(i);
-            Prediction p = tempPreds[i];
-            
-            // Satır Arkaplanı (Zebra deseni)
-            JPanel rowPanel = new JPanel();
-            rowPanel.setLayout(null);
-            rowPanel.setBounds(0, i * ROW_HEIGHT, WIDTH, ROW_HEIGHT);
-            rowPanel.setBackground(i % 2 == 0 ? new Color(240, 240, 240) : Color.WHITE);
-            
-            // 0: İsim
-            JLabel lblName = createCell(u.getName(), xPositions[0], widths[0]);
-            lblName.setHorizontalAlignment(SwingConstants.LEFT);
-            rowPanel.add(lblName);
-            
-            if (p != null) {
-                if (p.isDidNotAttend()) {
-                    JLabel lblDNA = createCell("KATILMADI", xPositions[1], 760);
-                    lblDNA.setForeground(Color.RED);
-                    rowPanel.add(lblDNA);
+            User u = userList.get(i);
+            Prediction pred = preds[i];
+
+            Color teamColor = settingsDAO.getTeamColor(u.getTeam(), Color.DARK_GRAY);
+            Color fontColor = getContrastColor(teamColor);
+
+            nameLblArr[i].setText("  " + u.getName());
+            nameLblArr[i].setBackground(teamColor);
+            nameLblArr[i].setForeground(fontColor);
+
+            if (pred != null) {
+                if (pred.isDidNotAttend()) {
+                    setLabel(qPointsLblArr[i], "DNA", Color.WHITE, Color.RED);
+                    setLabel(rPointsLblArr[i], "DNA", Color.WHITE, Color.RED);
+                    setLabel(raceRGLblArr[i], "0", Color.WHITE, Color.BLACK);
+                    setLabel(podiumLblArr[i], "✘", Color.WHITE, Color.RED);
+                    setLabel(sQPointsLblArr[i], "DNA", Color.WHITE, Color.RED);
+                    setLabel(sRPointsLblArr[i], "DNA", Color.WHITE, Color.RED);
+                    setLabel(sprintRGLblArr[i], "0", Color.WHITE, Color.BLACK);
+                    setLabel(totalPointsLblArr[i], "0", Color.WHITE, Color.BLACK);
                 } else {
-                    // 1: Sıralama Puanı
-                    rowPanel.add(createCell(String.valueOf(p.getQualiPoints()), xPositions[1], widths[1]));
-                    // 2: Yarış Puanı
-                    rowPanel.add(createCell(String.valueOf(p.getRacePoints()), xPositions[2], widths[2]));
-                    
-                    // 3: Yarış Doğru Tahmin (Y.DT) -> Eğer maksimumsa Mor yap
-                    JLabel lblRaceRG = createCell(String.valueOf(p.getRaceRightGuess()), xPositions[3], widths[3]);
-                    if (p.getRaceRightGuess() == maxRaceRG && maxRaceRG > 0) {
-                        lblRaceRG.setOpaque(true); lblRaceRG.setBackground(highlightColor); lblRaceRG.setForeground(Color.WHITE);
-                    }
-                    rowPanel.add(lblRaceRG);
-                    
-                    // 4: Podyum
-                    JLabel lblPodium = createCell(p.isPodiumCorrect() ? "✔" : "✘", xPositions[4], widths[4]);
-                    lblPodium.setForeground(p.isPodiumCorrect() ? new Color(0, 150, 0) : Color.RED);
-                    rowPanel.add(lblPodium);
-                    
-                    if (selectedRace.hasSprint()) {
-                        // 5: Sprint Q Puanı
-                        rowPanel.add(createCell(String.valueOf(p.getSprintQPoints()), xPositions[5], widths[5]));
-                        // 6: Sprint R Puanı
-                        rowPanel.add(createCell(String.valueOf(p.getSprintRPoints()), xPositions[6], widths[6]));
-                        
-                        // 7: Sprint Doğru Tahmin (S.DT) -> Eğer maksimumsa Mor yap
-                        JLabel lblSprintRG = createCell(String.valueOf(p.getSprintRightGuess()), xPositions[7], widths[7]);
-                        if (p.getSprintRightGuess() == maxSprintRG && maxSprintRG > 0) {
-                            lblSprintRG.setOpaque(true); lblSprintRG.setBackground(highlightColor); lblSprintRG.setForeground(Color.WHITE);
-                        }
-                        rowPanel.add(lblSprintRG);
+                    setLabel(qPointsLblArr[i], String.valueOf(pred.getQualiPoints()), Color.WHITE, Color.BLACK);
+                    setLabel(rPointsLblArr[i], String.valueOf(pred.getRacePoints()), Color.WHITE, Color.BLACK);
+
+                    if (pred.getRaceRightGuess() == maxRaceRG && maxRaceRG > 0) {
+                        setLabel(raceRGLblArr[i], String.valueOf(pred.getRaceRightGuess()), new Color(117, 49, 156),
+                                Color.WHITE);
                     } else {
-                        rowPanel.add(createCell("-", xPositions[5], widths[5]));
-                        rowPanel.add(createCell("-", xPositions[6], widths[6]));
-                        rowPanel.add(createCell("-", xPositions[7], widths[7]));
+                        setLabel(raceRGLblArr[i], String.valueOf(pred.getRaceRightGuess()), Color.WHITE, Color.BLACK);
                     }
-                    
-                    // 8: Toplam Puan
-                    JLabel lblTotal = createCell(String.valueOf(p.getPointsEarned()), xPositions[8], widths[8]);
-                    lblTotal.setFont(new Font("Verdana", Font.BOLD, 15));
-                    rowPanel.add(lblTotal);
+
+                    if (pred.isPodiumCorrect()) {
+                        setLabel(podiumLblArr[i], "✔", Color.WHITE, new Color(0, 150, 0));
+                    } else {
+                        setLabel(podiumLblArr[i], "✘", Color.WHITE, Color.RED);
+                    }
+
+                    if (selectedRace.hasSprint()) {
+                        setLabel(sQPointsLblArr[i], String.valueOf(pred.getSprintQPoints()), Color.WHITE, Color.BLACK);
+                        setLabel(sRPointsLblArr[i], String.valueOf(pred.getSprintRPoints()), Color.WHITE, Color.BLACK);
+
+                        if (pred.getSprintRightGuess() == maxSprintRG && maxSprintRG > 0) {
+                            setLabel(sprintRGLblArr[i], String.valueOf(pred.getSprintRightGuess()),
+                                    new Color(117, 49, 156), Color.WHITE);
+                        } else {
+                            setLabel(sprintRGLblArr[i], String.valueOf(pred.getSprintRightGuess()), Color.WHITE,
+                                    Color.BLACK);
+                        }
+                    } else {
+                        setLabel(sQPointsLblArr[i], "-", Color.WHITE, Color.BLACK);
+                        setLabel(sRPointsLblArr[i], "-", Color.WHITE, Color.BLACK);
+                        setLabel(sprintRGLblArr[i], "-", Color.WHITE, Color.BLACK);
+                    }
+
+                    int totalPts = pred.getPointsEarned();
+                    if (pred.getRaceRightGuess() == maxRaceRG && maxRaceRG > 0) {
+                        totalPts += maxRaceRG;
+                    }
+                    if (selectedRace.hasSprint() && pred.getSprintRightGuess() == maxSprintRG && maxSprintRG > 0) {
+                        totalPts += maxSprintRG;
+                    }
+
+                    setLabel(totalPointsLblArr[i], String.valueOf(totalPts), Color.WHITE, Color.BLACK);
                 }
             } else {
-                JLabel lblNoPred = createCell("TAHMİN GİRİLMEDİ", xPositions[1], 760);
-                lblNoPred.setForeground(Color.GRAY);
-                rowPanel.add(lblNoPred);
+                setLabel(qPointsLblArr[i], "-", Color.WHITE, Color.BLACK);
+                setLabel(rPointsLblArr[i], "-", Color.WHITE, Color.BLACK);
+                setLabel(raceRGLblArr[i], "0", Color.WHITE, Color.BLACK);
+                setLabel(podiumLblArr[i], "-", Color.WHITE, Color.BLACK);
+                setLabel(sQPointsLblArr[i], "-", Color.WHITE, Color.BLACK);
+                setLabel(sRPointsLblArr[i], "-", Color.WHITE, Color.BLACK);
+                setLabel(sprintRGLblArr[i], "0", Color.WHITE, Color.BLACK);
+                setLabel(totalPointsLblArr[i], "0", Color.WHITE, Color.BLACK);
             }
-            
-            tableContainer.add(rowPanel);
         }
-        
-        tableContainer.revalidate();
-        tableContainer.repaint();
+        panelTable.revalidate();
+        panelTable.repaint();
     }
-    
-    // Hücre (Label) oluşturmayı kolaylaştıran yardımcı metod
-    private JLabel createCell(String text, int x, int width) {
-        JLabel lbl = new JLabel(text);
-        lbl.setFont(new Font("Verdana", Font.PLAIN, 14));
-        lbl.setHorizontalAlignment(SwingConstants.CENTER);
-        lbl.setBounds(x, 0, width, ROW_HEIGHT);
-        return lbl;
+
+    private void setLabel(JLabel lbl, String text, Color bg, Color fg) {
+        lbl.setText(text);
+        lbl.setBackground(bg);
+        lbl.setForeground(fg);
+    }
+
+    private Color getContrastColor(Color color) {
+        double y = (299 * color.getRed() + 587 * color.getGreen() + 114 * color.getBlue()) / 1000;
+        return y >= 128 ? Color.BLACK : Color.WHITE;
     }
 }

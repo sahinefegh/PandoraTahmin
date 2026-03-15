@@ -46,10 +46,10 @@ public class EditUserPanel extends JPanel {
 
         list.setModel(listModel);
         list.setBounds(0, 30, 250, 430);
-        list.setFont(new Font("Century Gothic", Font.PLAIN, 17));
+        list.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.PLAIN, 17));
         add(list);
 
-        btnReturnMainMenu.setFont(new Font("Century Gothic", Font.BOLD, 14));
+        btnReturnMainMenu.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 14));
         btnReturnMainMenu.setBounds(375, 460, 200, 40);
         add(btnReturnMainMenu);
 
@@ -58,19 +58,19 @@ public class EditUserPanel extends JPanel {
         add(topPanel);
         topPanel.setLayout(null);
 
-        lblUserInfo.setFont(new Font("Verdana", Font.BOLD, 16));
+        lblUserInfo.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 16));
         lblUserInfo.setHorizontalAlignment(SwingConstants.CENTER);
         lblUserInfo.setBounds(250, 0, 450, 30);
         topPanel.add(lblUserInfo);
         lblUserList.setHorizontalAlignment(SwingConstants.CENTER);
-        lblUserList.setFont(new Font("Verdana", Font.BOLD, 16));
+        lblUserList.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 16));
         lblUserList.setBounds(0, 0, 250, 30);
         topPanel.add(lblUserList);
 
-        btnAddUser.setFont(new Font("Century Gothic", Font.BOLD, 15));
+        btnAddUser.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 15));
         btnAddUser.setBounds(0, 460, 125, 40);
         add(btnAddUser);
-        btnRemoveUser.setFont(new Font("Century Gothic", Font.BOLD, 15));
+        btnRemoveUser.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 15));
         btnRemoveUser.setBounds(125, 460, 125, 40);
         add(btnRemoveUser);
 
@@ -79,26 +79,26 @@ public class EditUserPanel extends JPanel {
         panelInfo.setLayout(null);
         add(panelInfo);
 
-        btnEditUser.setFont(new Font("Century Gothic", Font.BOLD, 14));
+        btnEditUser.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 14));
         btnEditUser.setBounds(150, 380, 150, 30);
         panelInfo.add(btnEditUser);
 
-        lblUserName.setFont(new Font("Century Gothic", Font.BOLD, 18));
+        lblUserName.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 18));
         lblUserName.setBounds(40, 30, 300, 30);
         panelInfo.add(lblUserName);
-        lblUserTeam.setFont(new Font("Century Gothic", Font.BOLD, 18));
+        lblUserTeam.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 18));
         lblUserTeam.setBounds(40, 70, 300, 30);
         panelInfo.add(lblUserTeam);
-        lblUserPoints.setFont(new Font("Century Gothic", Font.BOLD, 18));
+        lblUserPoints.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 18));
         lblUserPoints.setBounds(40, 110, 300, 30);
         panelInfo.add(lblUserPoints);
 
         // Düzenleme Bileşenleri
-        txtUserName.setFont(new Font("Century Gothic", Font.BOLD, 17));
+        txtUserName.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 17));
         txtUserName.setBounds(120, 30, 250, 30);
         panelInfo.add(txtUserName);
 
-        cmbxUserTeam.setFont(new Font("Century Gothic", Font.BOLD, 17));
+        cmbxUserTeam.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 17));
         cmbxUserTeam.setBounds(120, 70, 250, 30);
         SettingsDAO tempSetDao = new SettingsDAO();
         for (String teamName : tempSetDao.getAllTeams().keySet()) {
@@ -106,11 +106,11 @@ public class EditUserPanel extends JPanel {
         }
         panelInfo.add(cmbxUserTeam);
 
-        btnSaveUser.setFont(new Font("Century Gothic", Font.BOLD, 15));
+        btnSaveUser.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 15));
         btnSaveUser.setBounds(115, 380, 100, 30);
         panelInfo.add(btnSaveUser);
 
-        btnCancelEditing.setFont(new Font("Century Gothic", Font.BOLD, 15));
+        btnCancelEditing.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 15));
         btnCancelEditing.setBounds(235, 380, 100, 30);
         panelInfo.add(btnCancelEditing);
 
@@ -136,7 +136,6 @@ public class EditUserPanel extends JPanel {
                     String newName = txtUserName.getText();
                     String newTeam = (String) cmbxUserTeam.getSelectedItem();
 
-                    // Veritabanında güncelle
                     userDAO.updateUser(selectedUser.getId(), newName, newTeam);
 
                     editing = false;
@@ -188,13 +187,12 @@ public class EditUserPanel extends JPanel {
         btnReturnMainMenu.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main.mainMenuFrame.editUserFrame.dispose();
+                MainMenuFrame.editUserFrame.dispose();
                 Main.mainMenuFrame.setVisible(true);
             }
         });
     }
 
-    // Dialog işlemini kod okunabilirliği için ayrı bir metoda çıkardık
     private void openAddUserDialog() {
         JDialog dialog = new JDialog();
         dialog.setSize(400, 220);
@@ -204,17 +202,17 @@ public class EditUserPanel extends JPanel {
         dialog.setResizable(false);
 
         JLabel lblNewUserName = new JLabel("Kişi Adı");
-        lblNewUserName.setFont(new Font("Verdana", Font.BOLD, 16));
+        lblNewUserName.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 16));
         lblNewUserName.setBounds(20, 30, 100, 30);
         dialog.getContentPane().add(lblNewUserName);
 
         JTextField txtNewUserName = new JTextField();
         txtNewUserName.setBounds(140, 30, 200, 30);
-        txtNewUserName.setFont(new Font("Verdana", Font.PLAIN, 18));
+        txtNewUserName.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.PLAIN, 18));
         dialog.getContentPane().add(txtNewUserName);
 
         JLabel lblNewUserTeam = new JLabel("Takım");
-        lblNewUserTeam.setFont(new Font("Verdana", Font.BOLD, 16));
+        lblNewUserTeam.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 16));
         lblNewUserTeam.setBounds(20, 90, 100, 30);
         dialog.getContentPane().add(lblNewUserTeam);
 
@@ -238,7 +236,7 @@ public class EditUserPanel extends JPanel {
             String userName = txtNewUserName.getText().trim();
             String userTeam = (String) cmbxNewUserTeam.getSelectedItem();
             if (!userName.isEmpty()) {
-                userDAO.addUser(userName, userTeam); // Veritabanına Ekle
+                userDAO.addUser(userName, userTeam);
                 dialog.dispose();
                 updateList();
             }
@@ -282,10 +280,9 @@ public class EditUserPanel extends JPanel {
         btnReturnMainMenu.setEnabled(!editing);
     }
 
-    // Arayüzdeki JList'i veritabanındaki en güncel verilerle doldurur
     public void updateList() {
-        listModel.clear(); // Listeyi temizle
-        List<User> usersFromDB = userDAO.getAllUsers(); // Veritabanından güncel çek
+        listModel.clear();
+        List<User> usersFromDB = userDAO.getAllUsers();
 
         for (User u : usersFromDB) {
             listModel.addElement(u);

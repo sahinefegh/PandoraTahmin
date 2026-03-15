@@ -85,11 +85,19 @@ public class SettingsDAO {
     }
 
     public void deleteTeam(String teamName) {
-        String sql = "DELETE FROM teams WHERE name = ?";
+        String deleteTeamSql = "DELETE FROM teams WHERE name = ?";
+        String updateUsersSql = "UPDATE users SET team = '' WHERE team = ?";
         try (Connection conn = DatabaseManager.getConnection();
-                PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, teamName);
-            pstmt.executeUpdate();
+                PreparedStatement pstmtUser = conn.prepareStatement(updateUsersSql);
+                PreparedStatement pstmtTeam = conn.prepareStatement(deleteTeamSql)) {
+            
+            // Önce bu takımdaki kişilerin takımını boşalt
+            pstmtUser.setString(1, teamName);
+            pstmtUser.executeUpdate();
+
+            // Ardından takımı sil
+            pstmtTeam.setString(1, teamName);
+            pstmtTeam.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Takım silinemedi: " + e.getMessage());
         }
@@ -97,13 +105,24 @@ public class SettingsDAO {
 
     public void updateTeam(String oldName, String newName, Color newColor) {
         String hexColor = String.format("#%02x%02x%02x", newColor.getRed(), newColor.getGreen(), newColor.getBlue());
-        String sql = "UPDATE teams SET name = ?, color_hex = ? WHERE name = ?";
+        String sqlTeam = "UPDATE teams SET name = ?, color_hex = ? WHERE name = ?";
+        String sqlUsers = "UPDATE users SET team = ? WHERE team = ?";
+        
         try (Connection conn = DatabaseManager.getConnection();
-                PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, newName);
-            pstmt.setString(2, hexColor);
-            pstmt.setString(3, oldName);
-            pstmt.executeUpdate();
+                PreparedStatement pstmtTeam = conn.prepareStatement(sqlTeam);
+                PreparedStatement pstmtUsers = conn.prepareStatement(sqlUsers)) {
+            
+            // Kullanıcıların takım ismini güncelle
+            pstmtUsers.setString(1, newName);
+            pstmtUsers.setString(2, oldName);
+            pstmtUsers.executeUpdate();
+
+            // Takım özelliklerini güncelle
+            pstmtTeam.setString(1, newName);
+            pstmtTeam.setString(2, hexColor);
+            pstmtTeam.setString(3, oldName);
+            pstmtTeam.executeUpdate();
+            
         } catch (SQLException e) {
             System.out.println("Takım güncellenemedi: " + e.getMessage());
         }

@@ -7,22 +7,24 @@ import com.pandoratahmin.ui.MainMenuFrame;
 import com.pandoratahmin.database.DatabaseManager;
 
 public class Main {
-public static MainMenuFrame mainMenuFrame;
-    
+    public static MainMenuFrame mainMenuFrame;
 
     public static void main(String[] args) {
-        
+
         DatabaseManager.initializeDatabase();
-        
-		SwingUtilities.invokeLater(() -> {
+
+        SwingUtilities.invokeLater(() -> {
             try {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+            UIManager.put("defaultFont", com.pandoratahmin.ui.FontManager.getFont(java.awt.Font.PLAIN, 13f));
+
             FlatLightLaf.setup();
             mainMenuFrame = new MainMenuFrame();
             mainMenuFrame.setVisible(true);
         });
-	}
+    }
 }
