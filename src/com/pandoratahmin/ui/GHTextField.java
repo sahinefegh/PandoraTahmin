@@ -11,8 +11,8 @@ public class GHTextField extends JTextField {
 
 	private static final long serialVersionUID = 1L;
 
-	public static Font textFieldFont = com.pandoratahmin.ui.FontManager.getFont(Font.PLAIN, 16);
-	public static Font numaraFont = com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 18);
+	public static Font textFieldFont = FontManager.getFont(Font.PLAIN, 15.5f);
+	public static Font numaraFont = FontManager.getFont(Font.BOLD, 18);
 	JLabel lblNumber;
 	int digits;
 

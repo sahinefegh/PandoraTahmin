@@ -194,9 +194,15 @@ public class RaceResultPanel extends JPanel {
                     setLabel(rPointsLblArr[i], "DNA", Color.WHITE, Color.RED);
                     setLabel(raceRGLblArr[i], "0", Color.WHITE, Color.BLACK);
                     setLabel(podiumLblArr[i], "✘", Color.WHITE, Color.RED);
-                    setLabel(sQPointsLblArr[i], "DNA", Color.WHITE, Color.RED);
-                    setLabel(sRPointsLblArr[i], "DNA", Color.WHITE, Color.RED);
-                    setLabel(sprintRGLblArr[i], "0", Color.WHITE, Color.BLACK);
+                    if (selectedRace.hasSprint()) {
+                        setLabel(sQPointsLblArr[i], "DNA", Color.WHITE, Color.RED);
+                        setLabel(sRPointsLblArr[i], "DNA", Color.WHITE, Color.RED);
+                        setLabel(sprintRGLblArr[i], "0", Color.WHITE, Color.BLACK);
+                    } else {
+                        setLabel(sQPointsLblArr[i], "-", Color.WHITE, Color.BLACK);
+                        setLabel(sRPointsLblArr[i], "-", Color.WHITE, Color.BLACK);
+                        setLabel(sprintRGLblArr[i], "-", Color.WHITE, Color.BLACK);
+                    }
                     setLabel(totalPointsLblArr[i], "0", Color.WHITE, Color.BLACK);
                 } else {
                     setLabel(qPointsLblArr[i], String.valueOf(pred.getQualiPoints()), Color.WHITE, Color.BLACK);
@@ -247,9 +253,15 @@ public class RaceResultPanel extends JPanel {
                 setLabel(rPointsLblArr[i], "-", Color.WHITE, Color.BLACK);
                 setLabel(raceRGLblArr[i], "0", Color.WHITE, Color.BLACK);
                 setLabel(podiumLblArr[i], "-", Color.WHITE, Color.BLACK);
-                setLabel(sQPointsLblArr[i], "-", Color.WHITE, Color.BLACK);
-                setLabel(sRPointsLblArr[i], "-", Color.WHITE, Color.BLACK);
-                setLabel(sprintRGLblArr[i], "0", Color.WHITE, Color.BLACK);
+                if (selectedRace.hasSprint()) {
+                    setLabel(sQPointsLblArr[i], "-", Color.WHITE, Color.BLACK);
+                    setLabel(sRPointsLblArr[i], "-", Color.WHITE, Color.BLACK);
+                    setLabel(sprintRGLblArr[i], "0", Color.WHITE, Color.BLACK);
+                } else {
+                    setLabel(sQPointsLblArr[i], "-", Color.WHITE, Color.BLACK);
+                    setLabel(sRPointsLblArr[i], "-", Color.WHITE, Color.BLACK);
+                    setLabel(sprintRGLblArr[i], "-", Color.WHITE, Color.BLACK);
+                }
                 setLabel(totalPointsLblArr[i], "0", Color.WHITE, Color.BLACK);
             }
         }

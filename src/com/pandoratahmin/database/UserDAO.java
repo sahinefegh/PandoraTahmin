@@ -18,7 +18,7 @@ import com.pandoratahmin.service.ScoreCalculationService;
 public class UserDAO {
 
     public void addUser(String name, String team) {
-        String sql = "INSERT INTO users (name, team, total_points) VALUES (?, ?, 0)";
+        String sql = "INSERT INTO users (name, team) VALUES (?, ?)";
         try (Connection conn = DatabaseManager.getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
 

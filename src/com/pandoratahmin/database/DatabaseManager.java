@@ -16,8 +16,7 @@ public class DatabaseManager {
         String createUsersTable = "CREATE TABLE IF NOT EXISTS users ("
                 + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + "name TEXT NOT NULL UNIQUE,"
-                + "team TEXT,"
-                + "total_points INTEGER DEFAULT 0"
+                + "team TEXT"
                 + ");";
 
         String createRacesTable = "CREATE TABLE IF NOT EXISTS races ("

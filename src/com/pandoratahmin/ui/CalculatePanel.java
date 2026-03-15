@@ -88,17 +88,17 @@ public class CalculatePanel extends JPanel {
     }
 
     private void setupUI() {
-        btnReturnMainMenu.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 13));
+        btnReturnMainMenu.setFont(FontManager.getFont(Font.BOLD, 13));
         btnReturnMainMenu.setBounds(740, 450, 150, 40);
         btnReturnMainMenu.setFocusable(false);
         add(btnReturnMainMenu);
 
-        btnInsert.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 13));
+        btnInsert.setFont(FontManager.getFont(Font.BOLD, 13));
         btnInsert.setBounds(610, 455, 100, 30);
         btnInsert.setFocusable(false);
         add(btnInsert);
 
-        btnCalculatePoints.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 14));
+        btnCalculatePoints.setFont(FontManager.getFont(Font.BOLD, 14));
         btnCalculatePoints.setBounds(325, 450, 150, 40);
         btnCalculatePoints.setFocusable(false);
         add(btnCalculatePoints);
@@ -118,27 +118,27 @@ public class CalculatePanel extends JPanel {
         panelSprint.setLayout(null);
         add(panelSprint);
 
-        lblCalcStatus.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.PLAIN, 14));
+        lblCalcStatus.setFont(FontManager.getFont(Font.PLAIN, 14));
         lblCalcStatus.setBounds(105, 385, 200, 40);
         lblCalcStatus.setHorizontalAlignment(SwingConstants.RIGHT);
         panelRace.add(lblCalcStatus);
 
         JLabel lblUser = new JLabel("Kişi :");
-        lblUser.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 14));
+        lblUser.setFont(FontManager.getFont(Font.BOLD, 14));
         lblUser.setBounds(60, 20, 80, 20);
         panelTop.add(lblUser);
 
-        cmbxUser.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.PLAIN, 14));
+        cmbxUser.setFont(FontManager.getFont(Font.PLAIN, 14));
         cmbxUser.setBounds(140, 18, 180, 25);
         cmbxUser.setFocusable(false);
         panelTop.add(cmbxUser);
 
         JLabel lblRace = new JLabel("Yarış :");
-        lblRace.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 14));
+        lblRace.setFont(FontManager.getFont(Font.BOLD, 14));
         lblRace.setBounds(570, 20, 80, 20);
         panelTop.add(lblRace);
 
-        cmbxRace.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.PLAIN, 14));
+        cmbxRace.setFont(FontManager.getFont(Font.PLAIN, 14));
         cmbxRace.setBounds(650, 18, 180, 25);
         cmbxRace.setFocusable(false);
         panelTop.add(cmbxRace);
@@ -146,7 +146,7 @@ public class CalculatePanel extends JPanel {
         // --- Sıralama Bölümü ---
         JLabel lblQuali = new JLabel("Sıralama");
         lblQuali.setHorizontalAlignment(SwingConstants.CENTER);
-        lblQuali.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 18));
+        lblQuali.setFont(FontManager.getFont(Font.BOLD, 18));
         lblQuali.setBounds(0, 0, 475, 40);
         panelRace.add(lblQuali);
 
@@ -156,7 +156,7 @@ public class CalculatePanel extends JPanel {
             panelRace.add(txtQ[i].getLabel());
         }
 
-        chckbxQuali.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.PLAIN, 13));
+        chckbxQuali.setFont(FontManager.getFont(Font.PLAIN, 13));
         chckbxQuali.setBounds(122, 85, 140, 20);
         chckbxQuali.setFocusable(false);
         panelRace.add(chckbxQuali);
@@ -168,7 +168,7 @@ public class CalculatePanel extends JPanel {
         // --- Sprint Sıralama Bölümü ---
         JLabel lblSprintQ = new JLabel("Sprint Sıralama");
         lblSprintQ.setHorizontalAlignment(SwingConstants.CENTER);
-        lblSprintQ.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 18));
+        lblSprintQ.setFont(FontManager.getFont(Font.BOLD, 18));
         lblSprintQ.setBounds(0, 0, 400, 40);
         panelSprint.add(lblSprintQ);
 
@@ -178,7 +178,7 @@ public class CalculatePanel extends JPanel {
             panelSprint.add(txtSprintQ[i].getLabel());
         }
 
-        chckbxSprintQ.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.PLAIN, 13));
+        chckbxSprintQ.setFont(FontManager.getFont(Font.PLAIN, 13));
         chckbxSprintQ.setBounds(82, 85, 140, 20);
         chckbxSprintQ.setFocusable(false);
         panelSprint.add(chckbxSprintQ);
@@ -190,7 +190,7 @@ public class CalculatePanel extends JPanel {
         // --- Yarış Bölümü ---
         JLabel lblRaceT = new JLabel("Yarış");
         lblRaceT.setHorizontalAlignment(SwingConstants.CENTER);
-        lblRaceT.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 18));
+        lblRaceT.setFont(FontManager.getFont(Font.BOLD, 18));
         lblRaceT.setBounds(0, 120, 475, 40);
         panelRace.add(lblRaceT);
 
@@ -207,7 +207,7 @@ public class CalculatePanel extends JPanel {
         txtFastestLap.getLabel().setLocation(82, 249);
         panelRace.add(txtFastestLap.getLabel());
 
-        chckbxRace.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.PLAIN, 13));
+        chckbxRace.setFont(FontManager.getFont(Font.PLAIN, 13));
         chckbxRace.setBounds(230, 252, 140, 20);
         chckbxRace.setFocusable(false);
         panelRace.add(chckbxRace);
@@ -219,7 +219,7 @@ public class CalculatePanel extends JPanel {
         // --- Sprint Yarış Bölümü ---
         JLabel lblSprintR = new JLabel("Sprint Yarış");
         lblSprintR.setHorizontalAlignment(SwingConstants.CENTER);
-        lblSprintR.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 18));
+        lblSprintR.setFont(FontManager.getFont(Font.BOLD, 18));
         lblSprintR.setBounds(0, 120, 400, 40);
         panelSprint.add(lblSprintR);
 
@@ -231,7 +231,7 @@ public class CalculatePanel extends JPanel {
             panelSprint.add(txtSprintR[i].getLabel());
         }
 
-        chckbxSprintR.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.PLAIN, 13));
+        chckbxSprintR.setFont(FontManager.getFont(Font.PLAIN, 13));
         chckbxSprintR.setBounds(130, 252, 140, 20);
         chckbxSprintR.setFocusable(false);
         panelSprint.add(chckbxSprintR);
@@ -242,7 +242,7 @@ public class CalculatePanel extends JPanel {
 
         // --- Genel Katılım ---
         chckbxDNA.setHorizontalAlignment(SwingConstants.CENTER);
-        chckbxDNA.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.PLAIN, 13));
+        chckbxDNA.setFont(FontManager.getFont(Font.PLAIN, 13));
         chckbxDNA.setBounds(325, 330, 150, 20);
         chckbxDNA.setFocusable(false);
         panelRace.add(chckbxDNA);

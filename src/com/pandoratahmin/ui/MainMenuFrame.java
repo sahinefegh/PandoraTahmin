@@ -55,7 +55,7 @@ public class MainMenuFrame extends JFrame {
         JLabel[] mainLabels = { lblCalendar, lblCalculatePoints, lblResults, lblEditUser, lblSettings, lblExit };
         String[] mainIcons = { "calendar.png", "calculator.png", "chequeredFlag.png", "user.png", "settings.png",
                 "saveandexit.png" };
-        Font mainFont = com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 18);
+        Font mainFont = FontManager.getFont(Font.BOLD, 18);
 
         int startX = 90, startY = 50, xOffset = 205, yOffset = 230;
 
@@ -83,7 +83,7 @@ public class MainMenuFrame extends JFrame {
         // --- 3. ALT MENÜ (SONUÇLAR) BUTONLARININ DÖNGÜ İLE OLUŞTURULMASI ---
         JLabel[] subLabels = { lblRaceResults, lblTable, lblReturnMainMenu };
         String[] subIcons = { "chequeredFlag.png", "puantablosu.png", "return128.png" };
-        Font subFont = com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 17);
+        Font subFont = FontManager.getFont(Font.BOLD, 17);
 
         for (int i = 0; i < subLabels.length; i++) {
             JLabel lbl = subLabels[i];

@@ -42,7 +42,7 @@ public class SettingsPanel extends JPanel {
         this.setBackground(Color.BLACK);
         this.setLayout(null);
 
-        btnReturnMainMenu.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 13));
+        btnReturnMainMenu.setFont(FontManager.getFont(Font.BOLD, 13));
         btnReturnMainMenu.setFocusable(false);
         btnReturnMainMenu.setBounds(width - 180 - 10, height - 40 - 10, 180, 40);
         add(btnReturnMainMenu);
@@ -64,95 +64,95 @@ public class SettingsPanel extends JPanel {
 
         // --- PUANLAMA EKRANI ---
         JLabel lblPoints = new JLabel("Puanlama Sistemi");
-        lblPoints.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 17));
+        lblPoints.setFont(FontManager.getFont(Font.BOLD, 17));
         lblPoints.setHorizontalAlignment(SwingConstants.CENTER);
         lblPoints.setBounds(180, 2, 240, 30);
         panelPoints.add(lblPoints);
 
         JLabel lblRight = new JLabel("Doğru");
-        lblRight.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 15));
+        lblRight.setFont(FontManager.getFont(Font.BOLD, 15));
         lblRight.setBounds(40, 50, 80, 25);
         panelPoints.add(lblRight);
 
         spinnerRight.setModel(new SpinnerNumberModel(0, 0, null, 1));
-        spinnerRight.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.PLAIN, 14));
+        spinnerRight.setFont(FontManager.getFont(Font.PLAIN, 14));
         spinnerRight.setBounds(110, 50, 60, 25);
         panelPoints.add(spinnerRight);
 
         JLabel lblDNF = new JLabel("DNF");
-        lblDNF.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 15));
+        lblDNF.setFont(FontManager.getFont(Font.BOLD, 15));
         lblDNF.setBounds(40, 100, 80, 25);
         panelPoints.add(lblDNF);
 
         spinnerDNF.setModel(new SpinnerNumberModel(0, null, 0, 1));
-        spinnerDNF.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.PLAIN, 14));
+        spinnerDNF.setFont(FontManager.getFont(Font.PLAIN, 14));
         spinnerDNF.setBounds(110, 100, 60, 25);
         panelPoints.add(spinnerDNF);
 
         JLabel lblAbove = new JLabel("Daha iyi");
-        lblAbove.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 15));
+        lblAbove.setFont(FontManager.getFont(Font.BOLD, 15));
         lblAbove.setBounds(210, 50, 90, 25);
         panelPoints.add(lblAbove);
 
         spinnerAbove.setModel(new SpinnerNumberModel(0, 0, null, 1));
-        spinnerAbove.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.PLAIN, 14));
+        spinnerAbove.setFont(FontManager.getFont(Font.PLAIN, 14));
         spinnerAbove.setBounds(305, 50, 60, 25);
         panelPoints.add(spinnerAbove);
 
         JLabel lblBelow = new JLabel("Daha kötü");
-        lblBelow.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 15));
+        lblBelow.setFont(FontManager.getFont(Font.BOLD, 15));
         lblBelow.setBounds(210, 100, 90, 25);
         panelPoints.add(lblBelow);
 
         spinnerBelow.setModel(new SpinnerNumberModel(0, null, 0, 1));
-        spinnerBelow.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.PLAIN, 14));
+        spinnerBelow.setFont(FontManager.getFont(Font.PLAIN, 14));
         spinnerBelow.setBounds(305, 100, 60, 25);
         panelPoints.add(spinnerBelow);
 
         JLabel lblDNQ = new JLabel("Q Yazmadı");
-        lblDNQ.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 15));
+        lblDNQ.setFont(FontManager.getFont(Font.BOLD, 15));
         lblDNQ.setBounds(395, 50, 100, 25);
         panelPoints.add(lblDNQ);
 
         spinnerDNQ.setModel(new SpinnerNumberModel(0, null, 0, 1));
-        spinnerDNQ.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.PLAIN, 14));
+        spinnerDNQ.setFont(FontManager.getFont(Font.PLAIN, 14));
         spinnerDNQ.setBounds(500, 50, 60, 25);
         panelPoints.add(spinnerDNQ);
 
         JLabel lblDNR = new JLabel("R Yazmadı");
-        lblDNR.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 15));
+        lblDNR.setFont(FontManager.getFont(Font.BOLD, 15));
         lblDNR.setBounds(395, 100, 100, 25);
         panelPoints.add(lblDNR);
 
         spinnerDNR.setModel(new SpinnerNumberModel(0, null, 0, 1));
-        spinnerDNR.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.PLAIN, 14));
+        spinnerDNR.setFont(FontManager.getFont(Font.PLAIN, 14));
         spinnerDNR.setBounds(500, 100, 60, 25);
         panelPoints.add(spinnerDNR);
 
-        btnResetPoints.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 13));
+        btnResetPoints.setFont(FontManager.getFont(Font.BOLD, 13));
         btnResetPoints.setBounds(305, 140, 100, 25);
         panelPoints.add(btnResetPoints);
 
-        btnSavePoints.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 13));
+        btnSavePoints.setFont(FontManager.getFont(Font.BOLD, 13));
         btnSavePoints.setBounds(195, 140, 100, 25);
         panelPoints.add(btnSavePoints);
 
         // --- TAKIM RENKLERİ EKRANI ---
         JLabel lblColorTitle = new JLabel("Takım Yönetimi");
-        lblColorTitle.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 17));
+        lblColorTitle.setFont(FontManager.getFont(Font.BOLD, 17));
         lblColorTitle.setHorizontalAlignment(SwingConstants.CENTER);
         lblColorTitle.setBounds(180, 2, 240, 30);
         panelColor.add(lblColorTitle);
 
         // Sol: ComboBox
         cmbxTeams = new JComboBox<>();
-        cmbxTeams.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.PLAIN, 15));
+        cmbxTeams.setFont(FontManager.getFont(Font.PLAIN, 15));
         cmbxTeams.setBounds(30, 65, 180, 35);
         panelColor.add(cmbxTeams);
 
         // Orta: Önizleme Kutusu (İsim + Renk)
         lblTeamPreview = new JLabel("Takım Seçin");
-        lblTeamPreview.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 16));
+        lblTeamPreview.setFont(FontManager.getFont(Font.BOLD, 16));
         lblTeamPreview.setHorizontalAlignment(SwingConstants.CENTER);
         lblTeamPreview.setOpaque(true);
         lblTeamPreview.setBackground(Color.DARK_GRAY);
@@ -163,35 +163,35 @@ public class SettingsPanel extends JPanel {
 
         // Sağ: Kontrol Butonları
         JButton btnAddTeam = new JButton("Ekle");
-        btnAddTeam.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 13));
+        btnAddTeam.setFont(FontManager.getFont(Font.BOLD, 13));
         btnAddTeam.setBounds(450, 35, 110, 30);
         panelColor.add(btnAddTeam);
 
         JButton btnEditTeam = new JButton("Düzenle");
-        btnEditTeam.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 13));
+        btnEditTeam.setFont(FontManager.getFont(Font.BOLD, 13));
         btnEditTeam.setBounds(450, 70, 110, 30);
         panelColor.add(btnEditTeam);
 
         JButton btnDeleteTeam = new JButton("Sil");
-        btnDeleteTeam.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 13));
+        btnDeleteTeam.setFont(FontManager.getFont(Font.BOLD, 13));
         btnDeleteTeam.setBounds(450, 105, 110, 30);
         panelColor.add(btnDeleteTeam);
 
         // --- GEÇERLİ PİLOTLAR EKRANI ---
         JLabel lblDrivers = new JLabel("Geçerli Pilotlar");
-        lblDrivers.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 17));
+        lblDrivers.setFont(FontManager.getFont(Font.BOLD, 17));
         lblDrivers.setHorizontalAlignment(SwingConstants.CENTER);
         lblDrivers.setBounds(180, 2, 240, 30);
         panelDrivers.add(lblDrivers);
 
         txtDrivers = new JTextField();
         txtDrivers.setBounds(30, 50, width - 60, 25);
-        txtDrivers.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.PLAIN, 18));
+        txtDrivers.setFont(FontManager.getFont(Font.PLAIN, 18));
         panelDrivers.add(txtDrivers);
 
         JButton btnSaveDrivers = new JButton("Kaydet");
         btnSaveDrivers.setBounds((width - 100) / 2, 85, 100, 25);
-        btnSaveDrivers.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 13));
+        btnSaveDrivers.setFont(FontManager.getFont(Font.BOLD, 13));
         panelDrivers.add(btnSaveDrivers);
 
         // Arayüzü veritabanındaki verilerle doldur
