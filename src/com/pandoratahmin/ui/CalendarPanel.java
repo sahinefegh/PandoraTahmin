@@ -26,14 +26,13 @@ public class CalendarPanel extends JPanel {
     JButton btnAddRace = new JButton("Ekle");
     JButton btnRemoveRace = new JButton("Kaldır");
     JButton btnReturnMainMenu = new JButton("Ana Menüye Dön");
-    JButton btnEditRace = new JButton("Yarış Sonucunu Düzenle");
+    JButton btnEditRace = new JButton("Yarış Sonucu Düzenle");
 
     JLabel lblQualiResult = new JLabel("1-    2-    3-   ");
     GHTextField[] txtQ = new GHTextField[3];
     JLabel lblRaceResultLine1 = new JLabel("1-    2-    3-    4-    5-    ");
     JLabel lblRaceResultLine2 = new JLabel("6-    7-    8-    9-    10-  ");
     GHTextField[] txtRace = new GHTextField[10];
-    GHTextField txtFastestLap = new GHTextField("EHT");
     JTextField txtDnfs = new JTextField();
     JTextField txtSprintDnfs = new JTextField();
 
@@ -69,7 +68,7 @@ public class CalendarPanel extends JPanel {
         setLayout(null);
 
         list.setModel(listModel);
-        list.setVisibleRowCount(23);
+        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setBounds(0, 30, 250, 560);
         list.setFont(FontManager.getFont(Font.PLAIN, 16));
         add(list);
@@ -98,11 +97,11 @@ public class CalendarPanel extends JPanel {
         add(btnRemoveRace);
 
         btnReturnMainMenu.setFont(FontManager.getFont(Font.BOLD, 15));
-        btnReturnMainMenu.setBounds(530, 590, 210, 50);
+        btnReturnMainMenu.setBounds(530, 590, 220, 50);
         add(btnReturnMainMenu);
 
-        btnEditRace.setFont(FontManager.getFont(Font.BOLD, 15));
-        btnEditRace.setBounds(310, 590, 210, 50);
+        btnEditRace.setFont(FontManager.getFont(Font.BOLD, 14));
+        btnEditRace.setBounds(300, 590, 220, 50);
         add(btnEditRace);
 
         cardPanel.setBounds(250, 0, 550, 590);
@@ -316,19 +315,14 @@ public class CalendarPanel extends JPanel {
             panel.add(txtRace[i].getLabel());
         }
 
-        txtDnfs.setBounds(90, 230, 260, 25);
+        txtDnfs.setBounds(120, 230, 300, 25);
         txtDnfs.setFont(GHTextField.textFieldFont);
         panel.add(txtDnfs);
 
         JLabel lblDNFs = new JLabel("DNF");
-        lblDNFs.setBounds(42, 229, 50, 25);
+        lblDNFs.setBounds(70, 229, 50, 25);
         lblDNFs.setFont(GHTextField.numaraFont);
         panel.add(lblDNFs);
-
-        txtFastestLap.setGHLocation(420, 230);
-        panel.add(txtFastestLap);
-        txtFastestLap.getLabel().setBounds(373, 229, 50, 25);
-        panel.add(txtFastestLap.getLabel());
 
         lblSprintQTitleEdit.setHorizontalAlignment(SwingConstants.CENTER);
         lblSprintQTitleEdit.setFont(FontManager.getFont(Font.BOLD, 16));
@@ -358,7 +352,7 @@ public class CalendarPanel extends JPanel {
         txtSprintDnfs.setFont(GHTextField.textFieldFont);
         panel.add(txtSprintDnfs);
 
-        lblSprintDNFs.setBounds(82, 469, 50, 25);
+        lblSprintDNFs.setBounds(80, 469, 50, 25);
         lblSprintDNFs.setFont(GHTextField.numaraFont);
         panel.add(lblSprintDNFs);
 
@@ -384,7 +378,7 @@ public class CalendarPanel extends JPanel {
 
         JButton btnClearEdit = new JButton("Temizle");
         btnClearEdit.setFont(FontManager.getFont(Font.BOLD, 15));
-        btnClearEdit.setBounds(450, 520, 90, 30);
+        btnClearEdit.setBounds(440, 520, 100, 30);
         panel.add(btnClearEdit);
 
         btnCancelEditing.addActionListener(e -> {
@@ -395,7 +389,6 @@ public class CalendarPanel extends JPanel {
 
         btnClearEdit.addActionListener(e -> {
             selectedRace.setDnfs(null);
-            selectedRace.setFastestLap(null);
             selectedRace.setQualiResult(null);
             selectedRace.setRaceResult(null);
             selectedRace.setSprintDnfs(null);
@@ -413,8 +406,33 @@ public class CalendarPanel extends JPanel {
         });
 
         btnSaveEdit.addActionListener(e -> {
-            boolean valid = !txtQ[0].getText().isEmpty() && !txtRace[0].getText().isEmpty()
-                    && !txtFastestLap.getText().isEmpty();
+            boolean valid = true;
+            for (GHTextField txt : txtQ) {
+                if (txt.getText().isEmpty()) {
+                    valid = false;
+                    break;
+                }
+            }
+            for (GHTextField txt : txtRace) {
+                if (txt.getText().isEmpty()) {
+                    valid = false;
+                    break;
+                }
+            }
+            if (selectedRace.hasSprint()) {
+                for (GHTextField txt : txtSprintQ) {
+                    if (txt.getText().isEmpty()) {
+                        valid = false;
+                        break;
+                    }
+                }
+                for (GHTextField txt : txtSprintR) {
+                    if (txt.getText().isEmpty()) {
+                        valid = false;
+                        break;
+                    }
+                }
+            }
 
             if (valid) {
                 String[] quali = new String[3];
@@ -426,8 +444,6 @@ public class CalendarPanel extends JPanel {
                 for (int i = 0; i < 10; i++)
                     race[i] = txtRace[i].getText();
                 selectedRace.setRaceResult(race);
-
-                selectedRace.setFastestLap(txtFastestLap.getText());
 
                 String[] dnfs = txtDnfs.getText().toUpperCase(Locale.ENGLISH).split(",");
                 for (int i = 0; i < dnfs.length; i++)
@@ -460,7 +476,7 @@ public class CalendarPanel extends JPanel {
                 updateInfoPanel();
             } else {
                 JOptionPane.showMessageDialog(this,
-                        "Lütfen en azından Q1, R1 ve En Hızlı Tur (EHT) alanlarını doldurun.", "Uyarı",
+                        "Lütfen alanları eksiksiz doldurduğunuza emin olun.", "Uyarı",
                         JOptionPane.WARNING_MESSAGE);
             }
         });
@@ -561,8 +577,6 @@ public class CalendarPanel extends JPanel {
 
         String[] dnfs = selectedRace.getDnfs();
         txtDnfs.setText(dnfs != null ? String.join(",", dnfs) : "");
-        txtFastestLap.setText(selectedRace.getFastestLap() != null ? selectedRace.getFastestLap() : "");
-
         if (selectedRace.hasSprint()) {
             setSprintEditVisible(true);
             String[] sprintResult = selectedRace.getSprintResult();

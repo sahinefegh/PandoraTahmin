@@ -20,7 +20,6 @@ public class CalculatePanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
-    // --- Veritabanı ve Servis Bağlantıları ---
     private UserDAO userDAO;
     private RaceDAO raceDAO;
     private PredictionDAO predictionDAO;
@@ -44,7 +43,6 @@ public class CalculatePanel extends JPanel {
     GHTextField[] txtSprintQ = new GHTextField[3];
     GHTextField[] txtRace = new GHTextField[10];
     GHTextField[] txtSprintR = new GHTextField[8];
-    GHTextField txtFastestLap = new GHTextField("EHT");
 
     JTextField txtQualiFull = new JTextField();
     JTextField txtRaceFull = new JTextField();
@@ -89,39 +87,46 @@ public class CalculatePanel extends JPanel {
 
     private void setupUI() {
         btnReturnMainMenu.setFont(FontManager.getFont(Font.BOLD, 13));
-        btnReturnMainMenu.setBounds(740, 450, 150, 40);
+        btnReturnMainMenu.setBounds(730, 450, 160, 40);
         btnReturnMainMenu.setFocusable(false);
         add(btnReturnMainMenu);
 
         btnInsert.setFont(FontManager.getFont(Font.BOLD, 13));
-        btnInsert.setBounds(610, 455, 100, 30);
+        btnInsert.setBounds(600, 455, 100, 30);
         btnInsert.setFocusable(false);
         add(btnInsert);
 
         btnCalculatePoints.setFont(FontManager.getFont(Font.BOLD, 14));
-        btnCalculatePoints.setBounds(325, 450, 150, 40);
+        btnCalculatePoints.setBounds(375, 450, 150, 40);
         btnCalculatePoints.setFocusable(false);
         add(btnCalculatePoints);
 
         JPanel panelTop = new JPanel();
-        panelTop.setBounds(0, 0, 900, 60);
+        panelTop.setBounds(0, 0, 900, 62);
         panelTop.setLayout(null);
         add(panelTop);
 
+        JPanel panelLine = new JPanel();
+        panelLine.setBounds(0, 62, 900, 3);
+        panelLine.setBackground(Color.BLACK);
+        panelLine.setLayout(null);
+        add(panelLine);
+
         panelRace = new JPanel();
-        panelRace.setBounds(0, 65, 500, 435);
+        panelRace.setBounds(0, 65, 500, 433);
         panelRace.setLayout(null);
         add(panelRace);
 
         panelSprint = new JPanel();
-        panelSprint.setBounds(500, 65, 400, 435);
+        panelSprint.setBounds(500, 65, 400, 433);
         panelSprint.setLayout(null);
         add(panelSprint);
 
         lblCalcStatus.setFont(FontManager.getFont(Font.PLAIN, 14));
-        lblCalcStatus.setBounds(105, 385, 200, 40);
-        lblCalcStatus.setHorizontalAlignment(SwingConstants.RIGHT);
-        panelRace.add(lblCalcStatus);
+        lblCalcStatus.setBounds(0, 447, 375, 40);
+        lblCalcStatus.setHorizontalAlignment(SwingConstants.CENTER);
+        add(lblCalcStatus);
+        setComponentZOrder(lblCalcStatus, 0);
 
         JLabel lblUser = new JLabel("Kişi :");
         lblUser.setFont(FontManager.getFont(Font.BOLD, 14));
@@ -157,7 +162,7 @@ public class CalculatePanel extends JPanel {
         }
 
         chckbxQuali.setFont(FontManager.getFont(Font.PLAIN, 13));
-        chckbxQuali.setBounds(122, 85, 140, 20);
+        chckbxQuali.setBounds(110, 87, 160, 20);
         chckbxQuali.setFocusable(false);
         panelRace.add(chckbxQuali);
 
@@ -179,7 +184,7 @@ public class CalculatePanel extends JPanel {
         }
 
         chckbxSprintQ.setFont(FontManager.getFont(Font.PLAIN, 13));
-        chckbxSprintQ.setBounds(82, 85, 140, 20);
+        chckbxSprintQ.setBounds(70, 87, 160, 20);
         chckbxSprintQ.setFocusable(false);
         panelSprint.add(chckbxSprintQ);
 
@@ -202,17 +207,12 @@ public class CalculatePanel extends JPanel {
             panelRace.add(txtRace[i].getLabel());
         }
 
-        txtFastestLap.setGHLocation(125, 250);
-        panelRace.add(txtFastestLap);
-        txtFastestLap.getLabel().setLocation(82, 249);
-        panelRace.add(txtFastestLap.getLabel());
-
         chckbxRace.setFont(FontManager.getFont(Font.PLAIN, 13));
-        chckbxRace.setBounds(230, 252, 140, 20);
+        chckbxRace.setBounds(170, 252, 160, 20);
         chckbxRace.setFocusable(false);
         panelRace.add(chckbxRace);
 
-        txtRaceFull.setBounds(125, 285, 260, 25);
+        txtRaceFull.setBounds(125, 285, 250, 25);
         txtRaceFull.setFont(GHTextField.textFieldFont);
         panelRace.add(txtRaceFull);
 
@@ -232,7 +232,7 @@ public class CalculatePanel extends JPanel {
         }
 
         chckbxSprintR.setFont(FontManager.getFont(Font.PLAIN, 13));
-        chckbxSprintR.setBounds(130, 252, 140, 20);
+        chckbxSprintR.setBounds(130, 252, 160, 20);
         chckbxSprintR.setFocusable(false);
         panelSprint.add(chckbxSprintR);
 
@@ -309,7 +309,6 @@ public class CalculatePanel extends JPanel {
                 return;
             }
 
-            // Yeni Prediction nesnesini arayüzdeki verilerle doldur
             Prediction pred = new Prediction(selectedUser.getId(), selectedRace.getId());
             pred.setDidNotAttend(chckbxDNA.isSelected());
 
@@ -324,7 +323,6 @@ public class CalculatePanel extends JPanel {
                 for (int i = 0; i < 10; i++)
                     rArr[i] = txtRace[i].getText();
                 pred.setRacePred(rArr);
-                pred.setFastestLapPred(txtFastestLap.getText());
             }
             if (selectedRace.hasSprint()) {
                 if (!chckbxSprintQ.isSelected()) {
@@ -341,14 +339,11 @@ public class CalculatePanel extends JPanel {
                 }
             }
 
-            // Servis üzerinden puanı hesapla
             scoreService.calculatePoints(pred, selectedRace);
-
-            // Veritabanına kaydet
             predictionDAO.savePrediction(pred);
 
-            lblCalcStatus.setText("Tahmin Kaydedildi! Puan: " + pred.getPointsEarned());
-            lblCalcStatus.setForeground(new Color(0, 150, 0)); // Yeşil
+            lblCalcStatus.setText("Tahmin Kaydedildi!");
+            lblCalcStatus.setForeground(new Color(0, 150, 0));
         });
 
         // Uygulama açılışında ilk paneli güncelle
@@ -368,7 +363,6 @@ public class CalculatePanel extends JPanel {
                 lblCalcStatus.setForeground(Color.ORANGE);
             }
 
-            // Veritabanından bu yarış ve kullanıcı için olan eski tahmini çek
             currentPrediction = predictionDAO.getPrediction(selectedUser.getId(), selectedRace.getId());
 
             fillFieldsFromPrediction();
@@ -410,7 +404,6 @@ public class CalculatePanel extends JPanel {
         if (rPred != null && rPred.length >= 10) {
             for (int i = 0; i < 10; i++)
                 txtRace[i].setText(rPred[i]);
-            txtFastestLap.setText(currentPrediction.getFastestLapPred());
             chckbxRace.setSelected(false);
         } else {
             chckbxRace.setSelected(true);
@@ -449,7 +442,7 @@ public class CalculatePanel extends JPanel {
         if (hasSprint) {
             panelRace.setLocation(0, 65);
         } else {
-            panelRace.setLocation(200, 65); // Center the panel since it has 500 px width in a 900 px container
+            panelRace.setLocation(200, 65);
         }
 
         if (!hasSprint) {
@@ -463,7 +456,6 @@ public class CalculatePanel extends JPanel {
         }
     }
 
-    // Geçerli pilot isimlerini SettingsDAO'dan çekip kontrol eder
     private boolean checkDrivers() {
         String[] validDrivers = settingsDAO.getValidDrivers();
         List<String> validList = Arrays.asList(validDrivers);
@@ -471,9 +463,7 @@ public class CalculatePanel extends JPanel {
         if (!chckbxQuali.isSelected() && !areValid(validList, txtQ))
             return false;
 
-        GHTextField[] raceWithFL = Arrays.copyOf(txtRace, 11);
-        raceWithFL[10] = txtFastestLap;
-        if (!chckbxRace.isSelected() && !areValid(validList, raceWithFL))
+        if (!chckbxRace.isSelected() && !areValid(validList, txtRace))
             return false;
 
         if (selectedRace.hasSprint()) {
@@ -505,11 +495,9 @@ public class CalculatePanel extends JPanel {
         }
         if (!txtRaceFull.getText().isEmpty()) {
             drivers = txtRaceFull.getText().split("-");
-            if (drivers.length > 10) {
+            if (drivers.length > 1) {
                 for (int i = 0; i < 10; i++)
                     txtRace[i].setText(drivers[i + 1].trim().substring(0, 3));
-                if (drivers.length > 12)
-                    txtFastestLap.setText(drivers[12].trim().substring(1, 4));
             }
         }
         if (selectedRace != null && selectedRace.hasSprint()) {
@@ -541,7 +529,6 @@ public class CalculatePanel extends JPanel {
         for (int i = 0; i < 8; i++) {
             txtSprintR[i].setText("");
         }
-        txtFastestLap.setText("");
         chckbxQuali.setSelected(false);
         chckbxRace.setSelected(false);
         chckbxSprintQ.setSelected(false);
@@ -557,7 +544,6 @@ public class CalculatePanel extends JPanel {
     private void setRaceEnabled(boolean b) {
         for (int i = 0; i < 10; i++)
             txtRace[i].setEnabled(b);
-        txtFastestLap.setEnabled(b);
         txtRaceFull.setEnabled(b);
     }
 

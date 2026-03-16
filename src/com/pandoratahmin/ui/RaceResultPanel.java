@@ -94,11 +94,24 @@ public class RaceResultPanel extends JPanel {
         int[] widths = { 300, 74, 74, 74, 74, 74, 74, 74, 99 };
 
         for (int i = 0; i < headers.length; i++) {
-            JLabel lbl = new JLabel(headers[i]);
+            JLabel lbl = new JLabel();
             lbl.setForeground(Color.WHITE);
             lbl.setFont(FontManager.getFont(Font.BOLD, 16));
             lbl.setHorizontalAlignment(SwingConstants.CENTER);
             lbl.setBounds(xPos[i], 0, widths[i], rowHeight);
+            if (headers[i].equals("P")) {
+                try {
+                    ImageIcon icn = new ImageIcon("src/resources/images/podiumcolored.png");
+                    Image img = icn.getImage();
+                    Image newImg = img.getScaledInstance(widths[i] - 20, rowHeight, Image.SCALE_SMOOTH);
+                    lbl.setIcon(new ImageIcon(newImg));
+                } catch (Exception e) {
+                    lbl.setText("P");
+                    e.printStackTrace();
+                }
+            } else {
+                lbl.setText(headers[i]);
+            }
             panelTable.add(lbl);
         }
 
@@ -193,7 +206,7 @@ public class RaceResultPanel extends JPanel {
                     setLabel(qPointsLblArr[i], "DNA", Color.WHITE, Color.RED);
                     setLabel(rPointsLblArr[i], "DNA", Color.WHITE, Color.RED);
                     setLabel(raceRGLblArr[i], "0", Color.WHITE, Color.BLACK);
-                    setLabel(podiumLblArr[i], "✘", Color.WHITE, Color.RED);
+                    setLabel(podiumLblArr[i], "0", Color.WHITE, Color.RED);
                     if (selectedRace.hasSprint()) {
                         setLabel(sQPointsLblArr[i], "DNA", Color.WHITE, Color.RED);
                         setLabel(sRPointsLblArr[i], "DNA", Color.WHITE, Color.RED);
@@ -216,9 +229,10 @@ public class RaceResultPanel extends JPanel {
                     }
 
                     if (pred.isPodiumCorrect()) {
-                        setLabel(podiumLblArr[i], "✔", Color.WHITE, new Color(0, 150, 0));
+                        setLabel(podiumLblArr[i], "3", new Color(117, 49, 156), Color.WHITE);
+                        rPointsLblArr[i].setText(String.valueOf(Integer.parseInt(rPointsLblArr[i].getText()) - 3));
                     } else {
-                        setLabel(podiumLblArr[i], "✘", Color.WHITE, Color.RED);
+                        setLabel(podiumLblArr[i], "0", Color.WHITE, Color.BLACK);
                     }
 
                     if (selectedRace.hasSprint()) {
@@ -251,18 +265,18 @@ public class RaceResultPanel extends JPanel {
             } else {
                 setLabel(qPointsLblArr[i], "-", Color.WHITE, Color.BLACK);
                 setLabel(rPointsLblArr[i], "-", Color.WHITE, Color.BLACK);
-                setLabel(raceRGLblArr[i], "0", Color.WHITE, Color.BLACK);
+                setLabel(raceRGLblArr[i], "-", Color.WHITE, Color.BLACK);
                 setLabel(podiumLblArr[i], "-", Color.WHITE, Color.BLACK);
                 if (selectedRace.hasSprint()) {
                     setLabel(sQPointsLblArr[i], "-", Color.WHITE, Color.BLACK);
                     setLabel(sRPointsLblArr[i], "-", Color.WHITE, Color.BLACK);
-                    setLabel(sprintRGLblArr[i], "0", Color.WHITE, Color.BLACK);
+                    setLabel(sprintRGLblArr[i], "-", Color.WHITE, Color.BLACK);
                 } else {
                     setLabel(sQPointsLblArr[i], "-", Color.WHITE, Color.BLACK);
                     setLabel(sRPointsLblArr[i], "-", Color.WHITE, Color.BLACK);
                     setLabel(sprintRGLblArr[i], "-", Color.WHITE, Color.BLACK);
                 }
-                setLabel(totalPointsLblArr[i], "0", Color.WHITE, Color.BLACK);
+                setLabel(totalPointsLblArr[i], "-", Color.WHITE, Color.BLACK);
             }
         }
         panelTable.revalidate();

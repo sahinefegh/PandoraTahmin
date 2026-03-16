@@ -40,7 +40,7 @@ public class RaceDAO {
 
     public void updateRaceResults(Race race) {
         String sql = "UPDATE races SET is_completed = ?, quali_result = ?, race_result = ?, " +
-                     "sprint_q_result = ?, sprint_r_result = ?, fastest_lap = ?, dnfs = ?, sprint_dnfs = ? " +
+                     "sprint_q_result = ?, sprint_r_result = ?, dnfs = ?, sprint_dnfs = ? " +
                      "WHERE id = ?";
                      
         try (Connection conn = DatabaseManager.getConnection();
@@ -51,10 +51,9 @@ public class RaceDAO {
             pstmt.setString(3, joinArray(race.getRaceResult()));
             pstmt.setString(4, joinArray(race.getSprintQualiResult()));
             pstmt.setString(5, joinArray(race.getSprintResult()));
-            pstmt.setString(6, race.getFastestLap());
-            pstmt.setString(7, joinArray(race.getDnfs()));
-            pstmt.setString(8, joinArray(race.getSprintDnfs()));
-            pstmt.setInt(9, race.getId());
+            pstmt.setString(6, joinArray(race.getDnfs()));
+            pstmt.setString(7, joinArray(race.getSprintDnfs()));
+            pstmt.setInt(8, race.getId());
             
             pstmt.executeUpdate();
             
@@ -79,7 +78,6 @@ public class RaceDAO {
                 race.setRaceResult(splitString(rs.getString("race_result")));
                 race.setSprintQualiResult(splitString(rs.getString("sprint_q_result")));
                 race.setSprintResult(splitString(rs.getString("sprint_r_result")));
-                race.setFastestLap(rs.getString("fastest_lap"));
                 race.setDnfs(splitString(rs.getString("dnfs")));
                 race.setSprintDnfs(splitString(rs.getString("sprint_dnfs")));
                 

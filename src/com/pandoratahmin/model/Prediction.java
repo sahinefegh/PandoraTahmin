@@ -12,7 +12,6 @@ public class Prediction {
     private String[] racePred;
     private String[] sprintQPred;
     private String[] sprintRPred;
-    private String fastestLapPred;
     
     private int pointsEarned;
 
@@ -52,8 +51,6 @@ public class Prediction {
     public String[] getSprintRPred() { return sprintRPred; }
     public void setSprintRPred(String[] sprintRPred) { this.sprintRPred = sprintRPred; }
 
-    public String getFastestLapPred() { return fastestLapPred; }
-    public void setFastestLapPred(String fastestLapPred) { this.fastestLapPred = fastestLapPred; }
 
     public int getPointsEarned() { return pointsEarned; }
     public void setPointsEarned(int pointsEarned) { this.pointsEarned = pointsEarned; }

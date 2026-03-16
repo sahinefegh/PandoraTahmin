@@ -28,7 +28,6 @@ public class DatabaseManager {
                 + "race_result TEXT,"
                 + "sprint_q_result TEXT,"
                 + "sprint_r_result TEXT,"
-                + "fastest_lap TEXT,"
                 + "dnfs TEXT,"
                 + "sprint_dnfs TEXT"
                 + ");";
@@ -42,7 +41,6 @@ public class DatabaseManager {
                 + "race_pred TEXT,"
                 + "sprint_q_pred TEXT,"
                 + "sprint_r_pred TEXT,"
-                + "fastest_lap_pred TEXT,"
                 + "points_earned INTEGER DEFAULT 0,"
                 + "FOREIGN KEY(user_id) REFERENCES users(id),"
                 + "FOREIGN KEY(race_id) REFERENCES races(id)"

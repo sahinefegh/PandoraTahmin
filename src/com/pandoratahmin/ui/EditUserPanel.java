@@ -46,10 +46,11 @@ public class EditUserPanel extends JPanel {
 
         list.setModel(listModel);
         list.setBounds(0, 30, 250, 430);
-        list.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.PLAIN, 17));
+        list.setFont(FontManager.getFont(Font.PLAIN, 16));
+        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         add(list);
 
-        btnReturnMainMenu.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 14));
+        btnReturnMainMenu.setFont(FontManager.getFont(Font.BOLD, 14));
         btnReturnMainMenu.setBounds(375, 460, 200, 40);
         add(btnReturnMainMenu);
 
@@ -58,19 +59,19 @@ public class EditUserPanel extends JPanel {
         add(topPanel);
         topPanel.setLayout(null);
 
-        lblUserInfo.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 16));
+        lblUserInfo.setFont(FontManager.getFont(Font.BOLD, 16));
         lblUserInfo.setHorizontalAlignment(SwingConstants.CENTER);
         lblUserInfo.setBounds(250, 0, 450, 30);
         topPanel.add(lblUserInfo);
         lblUserList.setHorizontalAlignment(SwingConstants.CENTER);
-        lblUserList.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 16));
+        lblUserList.setFont(FontManager.getFont(Font.BOLD, 16));
         lblUserList.setBounds(0, 0, 250, 30);
         topPanel.add(lblUserList);
 
-        btnAddUser.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 15));
+        btnAddUser.setFont(FontManager.getFont(Font.BOLD, 15));
         btnAddUser.setBounds(0, 460, 125, 40);
         add(btnAddUser);
-        btnRemoveUser.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 15));
+        btnRemoveUser.setFont(FontManager.getFont(Font.BOLD, 15));
         btnRemoveUser.setBounds(125, 460, 125, 40);
         add(btnRemoveUser);
 
@@ -79,26 +80,26 @@ public class EditUserPanel extends JPanel {
         panelInfo.setLayout(null);
         add(panelInfo);
 
-        btnEditUser.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 14));
+        btnEditUser.setFont(FontManager.getFont(Font.BOLD, 14));
         btnEditUser.setBounds(150, 380, 150, 30);
         panelInfo.add(btnEditUser);
 
-        lblUserName.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 18));
+        lblUserName.setFont(FontManager.getFont(Font.BOLD, 18));
         lblUserName.setBounds(40, 30, 300, 30);
         panelInfo.add(lblUserName);
-        lblUserTeam.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 18));
+        lblUserTeam.setFont(FontManager.getFont(Font.BOLD, 18));
         lblUserTeam.setBounds(40, 70, 300, 30);
         panelInfo.add(lblUserTeam);
-        lblUserPoints.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 18));
+        lblUserPoints.setFont(FontManager.getFont(Font.BOLD, 18));
         lblUserPoints.setBounds(40, 110, 300, 30);
         panelInfo.add(lblUserPoints);
 
         // Düzenleme Bileşenleri
-        txtUserName.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 17));
+        txtUserName.setFont(FontManager.getFont(Font.BOLD, 17));
         txtUserName.setBounds(120, 30, 250, 30);
         panelInfo.add(txtUserName);
 
-        cmbxUserTeam.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 17));
+        cmbxUserTeam.setFont(FontManager.getFont(Font.BOLD, 17));
         cmbxUserTeam.setBounds(120, 70, 250, 30);
         SettingsDAO tempSetDao = new SettingsDAO();
         for (String teamName : tempSetDao.getAllTeams().keySet()) {
@@ -106,11 +107,11 @@ public class EditUserPanel extends JPanel {
         }
         panelInfo.add(cmbxUserTeam);
 
-        btnSaveUser.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 15));
+        btnSaveUser.setFont(FontManager.getFont(Font.BOLD, 15));
         btnSaveUser.setBounds(115, 380, 100, 30);
         panelInfo.add(btnSaveUser);
 
-        btnCancelEditing.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 15));
+        btnCancelEditing.setFont(FontManager.getFont(Font.BOLD, 15));
         btnCancelEditing.setBounds(235, 380, 100, 30);
         panelInfo.add(btnCancelEditing);
 
@@ -202,17 +203,17 @@ public class EditUserPanel extends JPanel {
         dialog.setResizable(false);
 
         JLabel lblNewUserName = new JLabel("Kişi Adı");
-        lblNewUserName.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 16));
+        lblNewUserName.setFont(FontManager.getFont(Font.BOLD, 16));
         lblNewUserName.setBounds(20, 30, 100, 30);
         dialog.getContentPane().add(lblNewUserName);
 
         JTextField txtNewUserName = new JTextField();
         txtNewUserName.setBounds(140, 30, 200, 30);
-        txtNewUserName.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.PLAIN, 18));
+        txtNewUserName.setFont(FontManager.getFont(Font.PLAIN, 18));
         dialog.getContentPane().add(txtNewUserName);
 
         JLabel lblNewUserTeam = new JLabel("Takım");
-        lblNewUserTeam.setFont(com.pandoratahmin.ui.FontManager.getFont(Font.BOLD, 16));
+        lblNewUserTeam.setFont(FontManager.getFont(Font.BOLD, 16));
         lblNewUserTeam.setBounds(20, 90, 100, 30);
         dialog.getContentPane().add(lblNewUserTeam);
 

@@ -106,7 +106,7 @@ public class TablePanel extends JPanel {
 
             JLabel labelName = new JLabel("          " + u.getName());
             labelName.setForeground(fontColor);
-            labelName.setBounds(60, CELL_HEIGHT * i, WIDTH - 120, CELL_HEIGHT - 1);
+            labelName.setBounds(60, CELL_HEIGHT * i, WIDTH - 130, CELL_HEIGHT - 1);
             labelName.setHorizontalAlignment(SwingConstants.LEFT);
             labelName.setBackground(teamColor);
             labelName.setOpaque(true);
@@ -115,7 +115,7 @@ public class TablePanel extends JPanel {
 
             JLabel labelPoints = new JLabel(String.valueOf(u.getPoints()));
             labelPoints.setForeground(fontColor);
-            labelPoints.setBounds(WIDTH - 60, CELL_HEIGHT * i, 60, CELL_HEIGHT - 1);
+            labelPoints.setBounds(WIDTH - 70, CELL_HEIGHT * i, 70, CELL_HEIGHT - 1);
             labelPoints.setHorizontalAlignment(SwingConstants.CENTER);
             labelPoints.setBackground(teamColor);
             labelPoints.setOpaque(true);

@@ -91,7 +91,7 @@ public class SettingsPanel extends JPanel {
 
         JLabel lblAbove = new JLabel("Daha iyi");
         lblAbove.setFont(FontManager.getFont(Font.BOLD, 15));
-        lblAbove.setBounds(210, 50, 90, 25);
+        lblAbove.setBounds(208, 50, 92, 25);
         panelPoints.add(lblAbove);
 
         spinnerAbove.setModel(new SpinnerNumberModel(0, 0, null, 1));
@@ -101,7 +101,7 @@ public class SettingsPanel extends JPanel {
 
         JLabel lblBelow = new JLabel("Daha kötü");
         lblBelow.setFont(FontManager.getFont(Font.BOLD, 15));
-        lblBelow.setBounds(210, 100, 90, 25);
+        lblBelow.setBounds(208, 100, 92, 25);
         panelPoints.add(lblBelow);
 
         spinnerBelow.setModel(new SpinnerNumberModel(0, null, 0, 1));
@@ -194,7 +194,6 @@ public class SettingsPanel extends JPanel {
         btnSaveDrivers.setFont(FontManager.getFont(Font.BOLD, 13));
         panelDrivers.add(btnSaveDrivers);
 
-        // Arayüzü veritabanındaki verilerle doldur
         getPoints();
         getDrivers();
         refreshTeamUI();
@@ -314,7 +313,7 @@ public class SettingsPanel extends JPanel {
 
     // Veritabanından Puanları Çeker
     public void getPoints() {
-        spinnerRight.setValue(settingsDAO.getSettingAsInt("POINTS_RIGHT", 25));
+        spinnerRight.setValue(settingsDAO.getSettingAsInt("POINTS_RIGHT", 5));
         spinnerDNF.setValue(settingsDAO.getSettingAsInt("POINTS_DNF", -2));
         spinnerAbove.setValue(settingsDAO.getSettingAsInt("POINTS_ABOVE", 1));
         spinnerBelow.setValue(settingsDAO.getSettingAsInt("POINTS_BELOW", -1));

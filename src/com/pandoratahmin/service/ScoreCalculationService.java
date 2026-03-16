@@ -21,17 +21,16 @@ public class ScoreCalculationService {
             return;
         }
 
-        int ptsRight = settingsDAO.getSettingAsInt("POINTS_RIGHT", 25); 
+        int ptsRight = settingsDAO.getSettingAsInt("POINTS_RIGHT", 5);
         int ptsAbove = settingsDAO.getSettingAsInt("POINTS_ABOVE", 1);
         int ptsBelow = settingsDAO.getSettingAsInt("POINTS_BELOW", -1);
-        int ptsDnf   = settingsDAO.getSettingAsInt("POINTS_DNF", -2);
-        int ptsDnq   = settingsDAO.getSettingAsInt("POINTS_DNQ", -5);
-        int ptsDnr   = settingsDAO.getSettingAsInt("POINTS_DNR", -15);
-        int ptsFl    = settingsDAO.getSettingAsInt("POINTS_FL", 1);
+        int ptsDnf = settingsDAO.getSettingAsInt("POINTS_DNF", -2);
+        int ptsDnq = settingsDAO.getSettingAsInt("POINTS_DNQ", -5);
+        int ptsDnr = settingsDAO.getSettingAsInt("POINTS_DNR", -15);
         int ptsPodium = settingsDAO.getSettingAsInt("POINTS_PODIUM", 3);
 
         calculateQuali(pred, race, ptsRight, ptsAbove, ptsDnq);
-        calculateRace(pred, race, ptsRight, ptsAbove, ptsBelow, ptsDnf, ptsDnr, ptsFl, ptsPodium);
+        calculateRace(pred, race, ptsRight, ptsAbove, ptsBelow, ptsDnf, ptsDnr, ptsPodium);
 
         if (race.hasSprint()) {
             calculateSprintQuali(pred, race, ptsRight, ptsAbove, ptsDnq);
@@ -45,7 +44,7 @@ public class ScoreCalculationService {
         pred.setPointsEarned(total);
     }
 
-    // --- SIRALAMA (QUALIFYING) HESAPLAMASI ---
+    // --- QUALI HESAPLAMASI ---
     private void calculateQuali(Prediction pred, Race race, int ptsRight, int ptsAbove, int ptsDnq) {
         if (pred.getQualiPred() == null || pred.getQualiPred().length == 0) { // Tahmin yapmadı (Q Yazmadı)
             pred.setQualiPoints(ptsDnq);
@@ -57,7 +56,8 @@ public class ScoreCalculationService {
         String[] preds = pred.getQualiPred();
 
         for (int i = 0; i < preds.length; i++) {
-            if (preds[i] == null || preds[i].trim().equals("X")) continue;
+            if (preds[i] == null || preds[i].trim().equals("X"))
+                continue;
 
             int actualPos = actualResults.indexOf(preds[i]);
 
@@ -70,8 +70,9 @@ public class ScoreCalculationService {
         pred.setQualiPoints(points);
     }
 
-    // --- YARIŞ (RACE) HESAPLAMASI ---
-    private void calculateRace(Prediction pred, Race race, int ptsRight, int ptsAbove, int ptsBelow, int ptsDnf, int ptsDnr, int ptsFl, int ptsPodium) {
+    // --- YARIŞ HESAPLAMASI ---
+    private void calculateRace(Prediction pred, Race race, int ptsRight, int ptsAbove, int ptsBelow, int ptsDnf,
+            int ptsDnr, int ptsPodium) {
         if (pred.getRacePred() == null || pred.getRacePred().length == 0) { // Tahmin yapmadı (R Yazmadı)
             pred.setRacePoints(ptsDnr);
             pred.setRaceRightGuess(0);
@@ -80,14 +81,15 @@ public class ScoreCalculationService {
 
         int points = 0;
         int rightGuess = 0;
-        
+
         List<String> actualResults = Arrays.asList(race.getRaceResult());
         List<String> dnfList = race.getDnfs() != null ? Arrays.asList(race.getDnfs()) : Arrays.asList();
         String[] preds = pred.getRacePred();
 
         for (int i = 0; i < preds.length; i++) {
             String driver = preds[i];
-            if (driver == null || driver.trim().equals("X") || driver.trim().isEmpty()) continue;
+            if (driver == null || driver.trim().equals("X") || driver.trim().isEmpty())
+                continue;
 
             int actualPos = actualResults.indexOf(driver);
 
@@ -120,11 +122,6 @@ public class ScoreCalculationService {
             pred.setPodiumCorrect(false);
         }
 
-        // En Hızlı Tur (Fastest Lap) Bonus Puanı
-        if (pred.getFastestLapPred() != null && pred.getFastestLapPred().equals(race.getFastestLap())) {
-            points += ptsFl;
-        }
-
         pred.setRacePoints(points);
         pred.setRaceRightGuess(rightGuess);
     }
@@ -141,7 +138,8 @@ public class ScoreCalculationService {
         String[] preds = pred.getSprintQPred();
 
         for (int i = 0; i < preds.length; i++) {
-            if (preds[i] == null || preds[i].trim().equals("X")) continue;
+            if (preds[i] == null || preds[i].trim().equals("X"))
+                continue;
 
             int actualPos = actualResults.indexOf(preds[i]);
             if (actualPos == i) {
@@ -154,7 +152,8 @@ public class ScoreCalculationService {
     }
 
     // --- SPRINT YARIŞ HESAPLAMASI ---
-    private void calculateSprintRace(Prediction pred, Race race, int ptsRight, int ptsAbove, int ptsBelow, int ptsDnf, int ptsDnr, int ptsPodium) {
+    private void calculateSprintRace(Prediction pred, Race race, int ptsRight, int ptsAbove, int ptsBelow, int ptsDnf,
+            int ptsDnr, int ptsPodium) {
         if (pred.getSprintRPred() == null || pred.getSprintRPred().length == 0) {
             pred.setSprintRPoints(ptsDnr);
             pred.setSprintRightGuess(0);
@@ -163,14 +162,15 @@ public class ScoreCalculationService {
 
         int points = 0;
         int rightGuess = 0;
-        
+
         List<String> actualResults = Arrays.asList(race.getSprintResult());
         List<String> dnfList = race.getSprintDnfs() != null ? Arrays.asList(race.getSprintDnfs()) : Arrays.asList();
         String[] preds = pred.getSprintRPred();
 
         for (int i = 0; i < preds.length; i++) {
             String driver = preds[i];
-            if (driver == null || driver.trim().equals("X") || driver.trim().isEmpty()) continue;
+            if (driver == null || driver.trim().equals("X") || driver.trim().isEmpty())
+                continue;
 
             int actualPos = actualResults.indexOf(driver);
 

@@ -14,11 +14,11 @@ public class PredictionDAO {
         Prediction existing = getPrediction(pred.getUserId(), pred.getRaceId());
 
         if (existing == null) {
-            String sql = "INSERT INTO predictions (user_id, race_id, did_not_attend, quali_pred, race_pred, sprint_q_pred, sprint_r_pred, fastest_lap_pred, points_earned) " +
-                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO predictions (user_id, race_id, did_not_attend, quali_pred, race_pred, sprint_q_pred, sprint_r_pred, points_earned) " +
+                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             executeSaveOrUpdate(sql, pred, false);
         } else {
-            String sql = "UPDATE predictions SET did_not_attend = ?, quali_pred = ?, race_pred = ?, sprint_q_pred = ?, sprint_r_pred = ?, fastest_lap_pred = ?, points_earned = ? " +
+            String sql = "UPDATE predictions SET did_not_attend = ?, quali_pred = ?, race_pred = ?, sprint_q_pred = ?, sprint_r_pred = ?, points_earned = ? " +
                          "WHERE user_id = ? AND race_id = ?";
             executeSaveOrUpdate(sql, pred, true);
         }
@@ -44,7 +44,6 @@ public class PredictionDAO {
                 pred.setRacePred(splitString(rs.getString("race_pred")));
                 pred.setSprintQPred(splitString(rs.getString("sprint_q_pred")));
                 pred.setSprintRPred(splitString(rs.getString("sprint_r_pred")));
-                pred.setFastestLapPred(rs.getString("fastest_lap_pred"));
                 pred.setPointsEarned(rs.getInt("points_earned"));
                 
                 return pred;
@@ -71,18 +70,16 @@ public class PredictionDAO {
                 pstmt.setString(5, joinArray(pred.getRacePred()));
                 pstmt.setString(6, joinArray(pred.getSprintQPred()));
                 pstmt.setString(7, joinArray(pred.getSprintRPred()));
-                pstmt.setString(8, pred.getFastestLapPred());
-                pstmt.setInt(9, pred.getPointsEarned());
+                pstmt.setInt(8, pred.getPointsEarned());
             } else { // UPDATE
                 pstmt.setBoolean(1, pred.isDidNotAttend());
                 pstmt.setString(2, joinArray(pred.getQualiPred()));
                 pstmt.setString(3, joinArray(pred.getRacePred()));
                 pstmt.setString(4, joinArray(pred.getSprintQPred()));
                 pstmt.setString(5, joinArray(pred.getSprintRPred()));
-                pstmt.setString(6, pred.getFastestLapPred());
-                pstmt.setInt(7, pred.getPointsEarned());
-                pstmt.setInt(8, pred.getUserId());
-                pstmt.setInt(9, pred.getRaceId());
+                pstmt.setInt(6, pred.getPointsEarned());
+                pstmt.setInt(7, pred.getUserId());
+                pstmt.setInt(8, pred.getRaceId());
             }
             pstmt.executeUpdate();
             
